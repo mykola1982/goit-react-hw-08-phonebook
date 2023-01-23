@@ -1,9 +1,30 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { useDispatch, useSelector } from 'react-redux';
 
-// import { Section } from 'components/Section';
+import { Section } from 'components/Section';
+import { ContactForm } from 'components/ContactForm';
+// import { Filter } from 'components/Filter';
 import { Container } from 'pages/Contacts/Contacts.styled';
+import { ContactList } from 'components/ContactList';
+import { Loader } from 'components/Loader';
+import { Text } from 'pages/Contacts/Contacts.styled';
+
+import {
+  selectContactsError,
+  selectContactsIsLoading,
+} from 'redux/contacts/contactsSelectors';
+import { fetchContacts } from 'redux/contacts/contactsOperations';
 
 const Contacts = () => {
+  const dispatch = useDispatch();
+  const contactsIsLoading = useSelector(selectContactsIsLoading);
+  const contactsError = useSelector(selectContactsError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <main>
       <Container>
@@ -11,7 +32,13 @@ const Contacts = () => {
           <title>Contacts</title>
         </Helmet>
 
-        {/* <Section title={'Contact List'}></Section> */}
+        <Section title={'Contact List'}>
+          <ContactForm />
+          {/* <Filter /> */}
+          {contactsIsLoading && !contactsError && <Loader />}
+          {contactsError && <Text>{contactsError}</Text>}
+          {/* <ContactList /> */}
+        </Section>
       </Container>
     </main>
   );
