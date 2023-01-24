@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Section } from 'components/Section';
-import { ContactForm } from 'components/ContactForm';
-// import { Filter } from 'components/Filter';
+
+import { Filter } from 'components/Filter';
 import { Container } from 'pages/Contacts/Contacts.styled';
 import { ContactList } from 'components/ContactList';
 import { Loader } from 'components/Loader';
@@ -15,6 +15,7 @@ import {
   selectContactsIsLoading,
 } from 'redux/contacts/contactsSelectors';
 import { fetchContacts } from 'redux/contacts/contactsOperations';
+import { AddButton } from 'components/AddButton/AddButton';
 
 const Contacts = () => {
   const dispatch = useDispatch();
@@ -33,11 +34,11 @@ const Contacts = () => {
         </Helmet>
 
         <Section title={'Contact List'}>
-          <ContactForm />
-          {/* <Filter /> */}
+          <AddButton />
+          <Filter />
           {contactsIsLoading && !contactsError && <Loader />}
           {contactsError && <Text>{contactsError}</Text>}
-          {/* <ContactList /> */}
+          <ContactList />
         </Section>
       </Container>
     </main>

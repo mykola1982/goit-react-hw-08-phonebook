@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { logOut } from 'redux/auth/authOperations';
 import { fetchContacts, addContact, deleteContact } from './contactsOperations';
 
 const handlePendig = state => {
@@ -19,7 +20,7 @@ const initialState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  extraReduscer: {
+  extraReducers: {
     [fetchContacts.pending]: handlePendig,
     [fetchContacts.fulfilled](state, action) {
       state.contactsIsLoading = false;
@@ -46,6 +47,13 @@ const contactsSlice = createSlice({
       state.items.splice(index, 1);
     },
     [deleteContact.rejected]: handleRejected,
+
+    [logOut.fulfilled](state) {
+      state.contactsIsLoading = false;
+      state.contactsError = null;
+      state.items = [];
+    },
+    ////також можливість редактувати
   },
 });
 

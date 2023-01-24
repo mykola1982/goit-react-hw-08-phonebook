@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsOperations';
 import { useSelector } from 'react-redux/es/exports';
 import { selectContacts } from 'redux/contacts/contactsSelectors';
+import { toast } from 'react-toastify';
 
 import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
@@ -32,7 +34,7 @@ const initialValues = {
   number: '',
 };
 
-export const ContactForm = () => {
+export const ContactForm = ({ onClose }) => {
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
@@ -42,11 +44,12 @@ export const ContactForm = () => {
     );
 
     if (hasName) {
-      alert(`${name} is alredy in contacts`);
+      toast.error(`${name} is alredy in contacts`);
       return;
     }
 
     dispatch(addContact({ name, number }));
+    onClose();
     resetForm();
   };
 
@@ -74,4 +77,8 @@ export const ContactForm = () => {
       </StyledForm>
     </Formik>
   );
+};
+
+ContactForm.propTypes = {
+  onClose: PropTypes.func.isRequired,
 };
