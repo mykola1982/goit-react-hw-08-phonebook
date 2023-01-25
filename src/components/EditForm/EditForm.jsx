@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+
 import { updateContact } from 'redux/contacts/contactsOperations';
+
+import { useSelector } from 'react-redux/es/exports';
+import { selectContacts } from 'redux/contacts/contactsSelectors';
 
 import { toast } from 'react-toastify';
 
@@ -30,7 +34,7 @@ const idInputNumber = nanoid();
 
 export const EditForm = ({ onClose, id, value }) => {
   const dispatch = useDispatch();
-  // const error = useSelector(selectContactsError);
+  const contacts = useSelector(selectContacts);
 
   const initialValues = {
     name: value.name,
@@ -38,7 +42,16 @@ export const EditForm = ({ onClose, id, value }) => {
   };
 
   const handleSubmit = ({ name, number }, { resetForm }) => {
+    const hasName = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (hasName) {
+      toast.error(`${name} is alredy in contacts`);
+      return;
+    }
     const data = { id, value: { name, number } };
+
     dispatch(updateContact(data))
       .unwrap()
       .then(() => {
