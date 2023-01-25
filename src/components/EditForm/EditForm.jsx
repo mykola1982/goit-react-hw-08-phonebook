@@ -42,9 +42,11 @@ export const EditForm = ({ onClose, id, value }) => {
   };
 
   const handleSubmit = ({ name, number }, { resetForm }) => {
-    const hasName = contacts.some(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
+    const hasName = contacts.some(contact => {
+      return (
+        contact.name.toLowerCase() === name.toLowerCase() && contact.id !== id
+      );
+    });
 
     if (hasName) {
       toast.error(`${name} is alredy in contacts`);
