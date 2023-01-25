@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/auth/authOperations';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 
 import {
   StyledForm,
@@ -32,7 +33,12 @@ export const LoginForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = ({ email, password }, { resetForm }) => {
-    dispatch(logIn({ email, password }));
+    dispatch(logIn({ email, password }))
+      .unwrap()
+      .then(() => {})
+      .catch(() =>
+        toast.error('Something went wrong...Try reloading the page')
+      );
     resetForm();
   };
 

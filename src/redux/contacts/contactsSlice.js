@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { logOut } from 'redux/auth/authOperations';
-import { fetchContacts, addContact, deleteContact } from './contactsOperations';
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  updateContact,
+} from './contactsOperations';
 
 const handlePendig = state => {
   state.contactsIsLoading = true;
@@ -42,7 +47,7 @@ const contactsSlice = createSlice({
       state.contactsIsLoading = false;
       state.contactsError = null;
       const index = state.items.findIndex(
-        task => task.id === action.payload.id
+        contact => contact.id === action.payload.id
       );
       state.items.splice(index, 1);
     },
@@ -53,7 +58,18 @@ const contactsSlice = createSlice({
       state.contactsError = null;
       state.items = [];
     },
-    ////також можливість редактувати
+
+    [updateContact.pending]: handlePendig,
+    [updateContact.fulfilled](state, action) {
+      state.contactsIsLoading = false;
+      state.contactsError = null;
+
+      const { id, name, number } = action.payload;
+      const index = state.items.findIndex(contact => contact.id === id);
+      state.items[index].name = name;
+      state.items[index].number = number;
+    },
+    [updateContact.rejected]: handleRejected,
   },
 });
 

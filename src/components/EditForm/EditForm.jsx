@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contacts/contactsOperations';
-import { useSelector } from 'react-redux/es/exports';
-import { selectContacts } from 'redux/contacts/contactsSelectors';
+import { updateContact } from 'redux/contacts/contactsOperations';
+
 import { toast } from 'react-toastify';
 
 import { nanoid } from 'nanoid';
@@ -29,27 +28,27 @@ const schema = yup.object().shape({
 const idInputName = nanoid();
 const idInputNumber = nanoid();
 
-const initialValues = {
-  name: '',
-  number: '',
-};
-
-export const EditForm = ({ onClose }) => {
-  const contacts = useSelector(selectContacts);
+export const EditForm = ({ onClose, id, value }) => {
   const dispatch = useDispatch();
+  // const error = useSelector(selectContactsError);
+
+  const initialValues = {
+    name: value.name,
+    number: value.number,
+  };
 
   const handleSubmit = ({ name, number }, { resetForm }) => {
-    const hasName = contacts.some(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
+    const data = { id, value: { name, number } };
+    dispatch(updateContact(data))
+      .unwrap()
+      .then(() => {
+        toast.success('Contact edited!');
+        onClose();
+      })
+      .catch(() =>
+        toast.error('Something went wrong...Try reloading the page')
+      );
 
-    if (hasName) {
-      toast.error(`${name} is alredy in contacts`);
-      return;
-    }
-
-    dispatch(addContact({ name, number }));
-    onClose();
     resetForm();
   };
 

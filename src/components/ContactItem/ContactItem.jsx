@@ -43,7 +43,7 @@ export const ContactItem = ({ id, name, number }) => {
 
       {showModal && (
         <Modal onClose={closeModal}>
-          <EditForm onClose={closeModal} />
+          <EditForm onClose={closeModal} value={{ name, number }} id={id} />
         </Modal>
       )}
     </>

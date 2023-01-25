@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { toast } from 'react-toastify';
 
 import { register } from 'redux/auth/authOperations';
-import { useAuth } from 'hooks';
+// import { useAuth } from 'hooks';
 
 import {
   StyledForm,
@@ -40,15 +40,20 @@ const initialValues = {
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
-  const { authError } = useAuth();
+  // const { authError } = useAuth();
 
   const handleSubmit = ({ name, email, password }, { resetForm }) => {
-    dispatch(register({ name, email, password }));
-
-    if (authError) {
-      toast.error(` Something went wrong...Try reloading the page`);
-      return;
-    }
+    dispatch(register({ name, email, password }))
+      .unwrap()
+      .then(() => {
+        // if (authError) {
+        //   toast.error(` Something went wrong...Try reloading the page`);
+        //   return;
+        // }
+      })
+      .catch(() =>
+        toast.error('Something went wrong...Try reloading the page')
+      );
 
     resetForm();
   };
