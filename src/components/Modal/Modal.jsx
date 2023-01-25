@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ModalBackdrop, ModalContet } from './Modal.styled';
 import { createPortal } from 'react-dom';
-import { ContactForm } from 'components/ContactForm';
+// import { ContactForm } from 'components/ContactForm';
 
 const modalRoot = document.querySelector('#modal-root');
 
-export const Modal = ({ onClose }) => {
+export const Modal = ({ children, onClose }) => {
   useEffect(() => {
     const hendelKeyDown = e => {
       if (e.code === 'Escape') {
@@ -30,7 +30,8 @@ export const Modal = ({ onClose }) => {
   return createPortal(
     <ModalBackdrop onClick={hendleBackdropClick}>
       <ModalContet>
-        <ContactForm onClose={onClose} />
+        {children}
+        {/* <ContactForm onClose={onClose} /> */}
       </ModalContet>
     </ModalBackdrop>,
     modalRoot
@@ -38,5 +39,6 @@ export const Modal = ({ onClose }) => {
 };
 
 Modal.propTypes = {
+  children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
 };

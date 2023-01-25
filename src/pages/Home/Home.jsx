@@ -1,7 +1,9 @@
+import { Title } from 'pages/Home/Home.styled';
+
 const Home = () => {
   return (
     <main>
-      <h1>Phonebook welcome page</h1>
+      <Title>Phonebook welcome page</Title>
     </main>
   );
 };
