@@ -15,8 +15,8 @@ import {
   Label,
   Input,
   StyledErrorMessage,
+  Button,
 } from './ContactForm.styled';
-import { Button } from 'components/ContactItem/ContactItem.styled';
 
 const schema = yup.object().shape({
   name: yup.string().required('This field is required'),

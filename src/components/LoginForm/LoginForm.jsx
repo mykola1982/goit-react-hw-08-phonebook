@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/auth/authOperations';
+import * as yup from 'yup';
 
 import {
   StyledForm,
@@ -10,6 +11,14 @@ import {
   StyledErrorMessage,
   Button,
 } from 'components/LoginForm/LoginForm.styled';
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Email must be a valid email')
+    .required('This field is required'),
+  password: yup.string().required('This field is required'),
+});
 
 const idInputEmail = nanoid();
 const idInputPassword = nanoid();
@@ -29,7 +38,11 @@ export const LoginForm = () => {
 
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={handleSubmit}
+      >
         <StyledForm>
           <Label htmlFor={idInputEmail}>Email</Label>
           <Input

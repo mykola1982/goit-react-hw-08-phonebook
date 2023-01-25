@@ -3,7 +3,7 @@ import { deleteContact } from 'redux/contacts/contactsOperations';
 import Avatar from 'react-avatar';
 
 import PropTypes from 'prop-types';
-import { Item, Button } from './ContactItem.styled';
+import { Item, Button, IconDel, IconEdit } from './ContactItem.styled';
 
 export const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
@@ -13,9 +13,18 @@ export const ContactItem = ({ id, name, number }) => {
       <p>
         {name}:&nbsp;{number}
       </p>
-      <Button type="button" onClick={() => dispatch(deleteContact(id))}>
-        Delete contact
-      </Button>
+      <ul>
+        <li>
+          <Button type="button" onClick={() => {}}>
+            <IconEdit />
+          </Button>
+        </li>
+        <li>
+          <Button type="button" onClick={() => dispatch(deleteContact(id))}>
+            <IconDel />
+          </Button>
+        </li>
+      </ul>
     </Item>
   );
 };

@@ -6,14 +6,13 @@ export const Button = styled.button`
   align-items: center;
   justify-content: space-between;
 
-  width: 100px;
   padding: 8px 16px;
   background-color: orange;
   border-radius: 4px;
   border: none;
   color: black;
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 16px;
 
   text-align: center;
 

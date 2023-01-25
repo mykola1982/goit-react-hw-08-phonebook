@@ -1,20 +1,32 @@
 import styled from '@emotion/styled';
+import { MdDeleteForever, MdModeEditOutline } from 'react-icons/md';
 
 export const Item = styled.li`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-bottom: 2px solid orange;
+  justify-content: space-around;
+  padding: 8px;
+  background-color: rgba(192, 192, 192, 0.5);
+  border-radius: 8px;
   font-size: 20px;
   line-height: 1.16;
+
+  > ul {
+    display: flex;
+    gap: 16px;
+  }
 `;
 
 export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   height: 40px;
-  width: 150px;
-  padding: 8px;
+  width: 40px;
+
   background-color: orange;
-  border-radius: 4px;
+  border-radius: 50%;
   border: 2px solid #fff;
   color: #fff;
   font-weight: 700;
@@ -30,4 +42,14 @@ export const Button = styled.button`
     background-color: #fff;
     color: orange;
   }
+`;
+
+export const IconDel = styled(MdDeleteForever)`
+  width: 24px;
+  height: 24px;
+`;
+
+export const IconEdit = styled(MdModeEditOutline)`
+  width: 24px;
+  height: 24px;
 `;
